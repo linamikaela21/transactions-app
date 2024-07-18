@@ -1,0 +1,42 @@
+{
+  "name": "magoya-backend",
+  "version": "1.0.0",
+  "description": "Magoya Backend",
+  "main": "app.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --exec ts-node src/app.ts",
+    "format": "eslint . --fix && prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linamikaela21/transaction-app-backend.git"
+  },
+  "author": "Lina Mikaela Gutierrez Arribas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linamikaela21/transaction-app-backend/issues"
+  },
+  "homepage": "https://github.com/linamikaela21/transaction-app-backend",
+  "dependencies": {
+    "@types/swagger-ui-express": "^4.1.6",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.14.11",
+    "globals": "^15.8.0",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^7.16.1"
+  }
+}

@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    volumes:
+      - ./src:/api
+    ports:
+      - "4000:4000"
+    command: >
+      sh -c "npm start"
