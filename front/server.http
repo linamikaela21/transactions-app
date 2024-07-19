@@ -1,0 +1,30 @@
+POST http://localhost:3002/accounts
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "accountNumber": "123456789123456",
+  "balance": 100
+}
+
+###
+
+GET http://localhost:3002/accounts/669a2aba3727e18af99eae1a/balance
+
+###
+
+POST http://localhost:3002/transactions
+Content-Type: application/json
+
+{
+  "accountID": "669a2aba3727e18af99eae1a",
+  "type": "DEPOSIT",
+  "amount": 200
+}
+
+###
+
+GET http://localhost:3002/transactions/669a2aba3727e18af99eae1a
+
+###
+

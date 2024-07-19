@@ -12,3 +12,12 @@ export const createTransactionService = async (
   });
   return transactions;
 };
+
+export const getTransactionsService = async (
+  accountID: string,
+): Promise<TransactionInterface[]> => {
+  const transactions = await Transaction.find({ accountID }).sort({
+    createdAt: "desc",
+  });
+  return transactions;
+};
