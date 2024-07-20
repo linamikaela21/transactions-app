@@ -12,8 +12,9 @@ const accountSchema: Schema = new Schema(
     accountNumber: {
       type: String,
       required: true,
-      minlength: 14,
-      menssage: "Account number must have 14 characters",
+      minlength: 8,
+      maxlength: 20,
+      menssage: "Account number must have between 8 and 20 characters",
     },
     balance: {
       type: Number,

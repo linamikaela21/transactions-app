@@ -25,13 +25,12 @@ export const accountSlice = createSlice({
     setAccount: (state, action) => {
       state.account = { ...state.account, ...action.payload };
     },
-    closeAccount: (state) => {
-      state.account = initialState.account;
+    logout: () => {
       storage.removeItem("persist:root");
     },
   },
 });
 
-export const { setAccount } = accountSlice.actions;
+export const { setAccount, logout } = accountSlice.actions;
 
 export default accountSlice.reducer;

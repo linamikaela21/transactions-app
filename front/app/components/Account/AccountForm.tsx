@@ -1,7 +1,7 @@
 "use client";
 
 import { redirect, RedirectType } from "next/navigation";
-import { useState } from "react";
+import { useFormik } from "formik";
 
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setAccount } from "../../../redux/features/accountSlice";
@@ -9,23 +9,40 @@ import { createAccount } from "../../../api/accounts";
 import { NumberInput } from "../common/NumberInput";
 import { SubmitButton } from "../common/SubmitButton";
 import { TextInput } from "../common/TextInput";
+import { accountSchema } from "../../../api/schemas/accountSchema";
+import { AccountInterface } from "../../../interfaces/Account";
 
 export const AccountForm = (): JSX.Element => {
-  const { account } = useAppSelector((state) => state.account);
-  const [loading, setLoading] = useState(false);
-
   const dispatch = useAppDispatch();
+  const { account } = useAppSelector((state) => state.account);
 
-  const handleSubmit = async () => {
-    setLoading(true);
+  const {
+    errors,
+    values,
+    handleChange,
+    handleSubmit,
+    touched,
+    isSubmitting,
+    isValid,
+  } = useFormik({
+    initialValues: {
+      name: account.name,
+      accountNumber: account.accountNumber,
+      balance: account.balance,
+    },
+    validationSchema: accountSchema,
+    onSubmit: async (values) => {
+      handleCreateAccount(values);
+    },
+  });
+
+  const handleCreateAccount = async (values: Omit<AccountInterface, "_id">) => {
     try {
-      const newAccount = await createAccount(account);
+      const newAccount = await createAccount(values);
 
       dispatch(setAccount(newAccount));
     } catch (error) {
-      throw new Error("Error creating account");
-    } finally {
-      setLoading(false);
+      throw new Error("Failed to create account");
     }
   };
 
@@ -34,34 +51,38 @@ export const AccountForm = (): JSX.Element => {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 w-full justify-center shadow-md shadow-lime-500">
+    <form className="flex flex-col lg:gap-4 gap-12 p-4 w-full justify-center shadow-md lg:shadow-lime-500 pb-8">
       <TextInput
-        isInvalid={false}
+        errorMessage={errors.name}
+        handleChange={handleChange}
         label="Name"
-        setValue={(value: string) => dispatch(setAccount({ name: value }))}
-        value={account.name}
+        name="name"
+        placeholder="John Doe"
+        touched={touched.name}
+        value={values.name}
       />
       <TextInput
-        isInvalid={false}
+        errorMessage={errors.accountNumber}
+        handleChange={handleChange}
         label="Account Number"
-        setValue={(value: string) =>
-          dispatch(setAccount({ accountNumber: value }))
-        }
-        value={account.accountNumber}
+        name="accountNumber"
+        placeholder="ABCD1234ABCD1234"
+        touched={touched.accountNumber}
+        value={values.accountNumber}
       />
       <NumberInput
-        isInvalid={false}
-        label="Initial Balance"
-        setValue={(value: string) =>
-          dispatch(setAccount({ balance: Number(value) }))
-        }
-        value={String(account.balance)}
+        errorMessage={errors.balance}
+        handleChange={handleChange}
+        label="Balance"
+        name="balance"
+        touched={touched.balance}
+        value={values.balance}
       />
       <SubmitButton
-        disabled={!account.name || !account.accountNumber || !account.balance}
+        disabled={!isValid || !values.accountNumber || !values.name}
         handleSubmit={handleSubmit}
-        loading={loading}
+        loading={isSubmitting}
       />
-    </div>
+    </form>
   );
 };

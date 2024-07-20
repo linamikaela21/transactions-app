@@ -7,16 +7,17 @@ import { Skeleton } from "@nextui-org/react";
 import { useAppSelector } from "../../../redux/hooks";
 import { getAccountBalance } from "../../../api/accounts";
 import { parseNumber } from "../../../utils/parseNumer";
+import { NavBar } from "../common/NavBar";
 
 export const AccountInfo = () => {
-  const { account } = useAppSelector((state: any) => state.account);
+  const { account } = useAppSelector((state) => state.account);
   const accountID = account._id;
 
   if (!accountID) {
     redirect("/", RedirectType.push);
   }
 
-  const { transactions } = useAppSelector((state: any) => state.transaction);
+  const { transactions } = useAppSelector((state) => state.transaction);
 
   const { data, isLoading } = useQuery({
     queryKey: ["balance", accountID, transactions?.length],
@@ -27,11 +28,11 @@ export const AccountInfo = () => {
 
   return (
     <div className="flex flex-col gap-4 p-4 w-full justify-center">
-      <h1 className="text-center p-2 font-semibold lg:text-4xl text-2xl">
-        {account.name} - {account.accountNumber}
-      </h1>
+      <NavBar accountNumber={account.accountNumber} userName={account.name} />
       <Skeleton className="h-16 bg-lima-500" isLoaded={!isLoading}>
-        <h2 className="text-center p-2 font-semibold lg:-5xl text-3xl">Balance: {isLoading ? '...Loading': parseNumber(data?.balance)}</h2>
+        <h2 className="text-center p-2 font-semibold lg:-5xl text-3xl">
+          Balance: {isLoading ? "...Loading" : parseNumber(data?.balance)}
+        </h2>
       </Skeleton>
     </div>
   );

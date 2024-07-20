@@ -1,40 +1,65 @@
+import { faFont } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@nextui-org/react";
 
 interface TextInputProps {
   value: string;
-  setValue: (value: string) => void;
-  isInvalid: boolean;
+  handleChange: (e: any) => void;
   label: string;
+  name: string;
+  errorMessage?: string;
+  touched?: boolean;
+  placeholder?: string;
 }
 
 export const TextInput = ({
   value,
-  setValue,
-  isInvalid,
+  handleChange,
+  errorMessage,
   label,
+  touched,
+  name,
+  placeholder,
 }: TextInputProps): JSX.Element => {
   return (
     <div className="w-full flex justify-center">
-    <Input
-      fullWidth
-      isClearable
-      className="max-w-lg flex justify-center text-medium"
-      color={value ? isInvalid ? "danger" : "success" : "default"}
-      errorMessage={`Please enter a valid ${label}`}
-      isInvalid={isInvalid}
-      label={label}
-      size="md"
-      startContent={
-        <div className="pointer-events-none flex items-center">
-          <span className="text-default-400 text-medium">T</span>
-        </div>
-      }
-      type="text"
-      value={value}
-      variant="bordered"
-      onClear={() => setValue("")}
-      onValueChange={setValue}
-    />
+      <Input
+        fullWidth
+        isClearable
+        className="max-w-lg flex justify-center text-lime-500"
+        classNames={{
+          label: "text-large",
+          errorMessage: "text-large",
+          input: "text-large placeholder:text-lime-700 placeholder:text-lg",
+        }}
+        color={
+          value
+            ? !!errorMessage && touched
+              ? "danger"
+              : "success"
+            : "secondary"
+        }
+        errorMessage={errorMessage}
+        isInvalid={!!errorMessage}
+        label={label}
+        name={name}
+        placeholder={placeholder}
+        size="lg"
+        startContent={
+          <div className="flex flex-col mb-1">
+            <FontAwesomeIcon icon={faFont} />
+          </div>
+        }
+        type="text"
+        value={value}
+        variant="bordered"
+        onChange={(e) =>
+          handleChange({
+            target: { name, value: e.target.value },
+          })
+        }
+        onClear={() => handleChange({ target: { name, value: "" } })}
+      />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 
-import { routes } from "../app/constants/routes";
+import { routes } from "../app/constants/routes"
+import { notFound } from "next/navigation";
+
 import { AccountInterface } from "../interfaces/Account";
 
 export const createAccount = async (data: Omit<AccountInterface, "_id">) => {
@@ -15,7 +17,7 @@ export const createAccount = async (data: Omit<AccountInterface, "_id">) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create account");
+      notFound();
     }
 
     return response.json();

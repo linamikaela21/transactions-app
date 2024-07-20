@@ -1,48 +1,54 @@
 import { Select, SelectItem } from "@nextui-org/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface SelectInputProps {
-  value: { key: string; label: string };
-  setValue: (key: string) => void;
-  options: { key: string; label: string; Icon?: any }[];
+  name: string;
+  value: string;
+  handleChange: (e: any) => void;
+  options: { key: string; label: string; Icon?: IconProp }[];
   label: string;
-  placeholder: string;
 }
 
 export const SelectInput = ({
+  name,
   value,
-  setValue,
+  handleChange,
   label,
-  placeholder,
   options,
 }: SelectInputProps): JSX.Element => {
   return (
     <div className="w-full flex justify-center">
       <Select
         fullWidth
-        className="max-w-lg text-medium shadow-md text-lime-500 bg-transparent"
-        color="success"
+        className="max-w-lg flex justify-center text-lime-500"
+        classNames={{
+          label: "text-large",
+          errorMessage: "text-large",
+          listbox: "bg-gray-100 text-secondary",
+          popoverContent: "bg-secondary",
+        }}
+        color={value ? "success" : "secondary"}
         label={label}
-        placeholder={placeholder}
         radius="sm"
-        size="md"
+        size="lg"
         startContent={
           <div className="pointer-events-none flex items-center">
-            <span className="text-default-400 text-medium">$</span>
+            <FontAwesomeIcon icon={faDollarSign} />
           </div>
         }
-        value={value.key}
+        value={value}
         variant="bordered"
-        onSelect={(option) => {
-          setValue(option.currentTarget.value);
-        }}
+        onChange={(e) => handleChange({ target: { name, value: e.target.value } })}
       >
         {options.map(({ key, label, Icon }) => (
           <SelectItem
             key={key}
             shouldHighlightOnFocus
-            className="text-medium shadow-md text-lime-500 bg-transparent"
+            className="text-small shadow-md bg-transparent text-secondary"
             startContent={
-              <div className="flex items-center text-medium">{Icon()}</div>
+              Icon ? <FontAwesomeIcon icon={Icon} size="sm" /> : null
             }
             value={key}
           >

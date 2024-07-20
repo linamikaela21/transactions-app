@@ -16,7 +16,7 @@ export const SubmitButton = ({
       <Button
         fullWidth
         className="max-w-lg cursor-pointer text-medium"
-        color={disabled ? "default" : "success"}
+        color={disabled ? "secondary" : "success"}
         isDisabled={disabled}
         isLoading={loading}
         radius="sm"

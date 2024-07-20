@@ -10,6 +10,7 @@ export const createTransactionService = async (
   }).sort({
     createdAt: "desc",
   });
+
   return transactions;
 };
 

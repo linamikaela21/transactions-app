@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createTransaction, getAllTransactions } from "../controllers/transactions";
+import {
+  createTransaction,
+  getAllTransactions,
+} from "../controllers/transactions";
 import {
   createAccountController,
   getBalanceController,

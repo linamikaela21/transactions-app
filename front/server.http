@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "accountID": "669a2aba3727e18af99eae1a",
-  "type": "DEPOSIT",
+  "type": "WITHDRAWAL",
   "amount": 200
 }
 

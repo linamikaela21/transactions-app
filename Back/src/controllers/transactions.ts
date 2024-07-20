@@ -8,7 +8,7 @@ import { getAccountService, updateBalanceService } from "../services/accounts";
 
 export const createTransaction = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> => {
   try {
     const transaction: TransactionInterface = req.body;
@@ -47,7 +47,7 @@ export const createTransaction = async (
         transaction.accountID,
         transaction.type === "DEPOSIT"
           ? transaction.amount
-          : -transaction.amount
+          : -transaction.amount,
       );
 
       res.status(201).json({ balance, transactions });
@@ -59,7 +59,7 @@ export const createTransaction = async (
 
 export const getAllTransactions = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> => {
   try {
     const { accountID } = req.params;
