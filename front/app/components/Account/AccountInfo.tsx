@@ -9,7 +9,7 @@ import { getAccountBalance } from "../../../api/accounts";
 import { parseNumber } from "../../../utils/parseNumer";
 import { NavBar } from "../common/NavBar";
 
-export const AccountInfo = () => {
+export const AccountInfo = (): JSX.Element => {
   const { account } = useAppSelector((state) => state.account);
   const accountID = account._id;
 
@@ -17,13 +17,9 @@ export const AccountInfo = () => {
     redirect("/", RedirectType.push);
   }
 
-  const { transactions } = useAppSelector((state) => state.transaction);
-
   const { data, isLoading } = useQuery({
-    queryKey: ["balance", accountID, transactions?.length],
+    queryKey: ["balance"],
     queryFn: async () => await getAccountBalance(accountID),
-    staleTime: 1000,
-    retryDelay: 1000,
   });
 
   return (

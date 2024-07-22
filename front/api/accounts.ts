@@ -9,7 +9,7 @@ export const createAccount = async (data: Omit<AccountInterface, "_id">) => {
   try {
     const response = await fetch(routes.createAccount, {
       method: "POST",
-      cache: "no-store",
+      cache: "force-cache",
       headers: {
       "Content-Type": "application/json",
       },
@@ -20,7 +20,12 @@ export const createAccount = async (data: Omit<AccountInterface, "_id">) => {
       notFound();
     }
 
-    return response.json();
+    const account = await response.json();
+
+    return {
+      data: account,
+      status: response.status,
+    }
   } catch (error) {
     throw new Error("Failed to create account");
   }

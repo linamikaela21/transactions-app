@@ -2,6 +2,7 @@
 
 import { NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import StoreProvider from "./StoreProvider";
 
@@ -20,6 +21,7 @@ export function Providers({
     <NextUIProvider>
       <QueryClientProvider client={queryClient}>
         <StoreProvider>{children}</StoreProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </NextUIProvider>
   );

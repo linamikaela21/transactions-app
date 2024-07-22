@@ -17,7 +17,7 @@ export const transactionsSlice = createSlice({
   initialState,
   reducers: {
     setTransactions: (state, action) => {
-      state.transactions = action.payload;
+      state.transactions = { ...state.transactions, ...action.payload };
     }
   },
 });

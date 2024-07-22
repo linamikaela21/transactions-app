@@ -20,7 +20,7 @@ interface NavBarProps {
   accountNumber: string;
 }
 
-export const NavBar = ({ userName, accountNumber }: NavBarProps) => {
+export const NavBar = ({ userName, accountNumber }: NavBarProps): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => dispatch(logout());
@@ -43,7 +43,7 @@ export const NavBar = ({ userName, accountNumber }: NavBarProps) => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Tooltip color="secondary" content="Logout" placement="bottom">
+          <Tooltip color="secondary" content="Logout" placement="bottom" radius="sm">
             <Button
               isIconOnly
               as={Link}
